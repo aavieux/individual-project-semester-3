@@ -1,6 +1,13 @@
 package com.example.individualproject.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class ShadowProfile {
+    public ShadowProfile(){}
     public ShadowProfile(int id, String first_name, String last_name, String pseudonym, String profile_pic_url, int collection_id) {
         this.id = id;
         this.first_name = first_name;
@@ -9,7 +16,8 @@ public class ShadowProfile {
         this.profile_pic_url = profile_pic_url;
         this.collection_id = collection_id;
     }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String first_name;
     private String last_name;

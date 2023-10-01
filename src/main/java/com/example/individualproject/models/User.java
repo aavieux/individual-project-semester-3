@@ -1,7 +1,14 @@
 package com.example.individualproject.models;
-
+import com.example.individualproject.models.enums.Genre;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+@Entity
 public class User {
-    public User(String first_name, String last_name, String email, String password, String phone_number, int default_lib_id) {
+    public User() {} // required for JPA
+    public User(int id,String first_name, String last_name, String email, String password, String phone_number, int default_lib_id) {
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -10,16 +17,25 @@ public class User {
         this.default_lib_id = default_lib_id;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String first_name;
     private String last_name;
     private String email;
     private String password;
     private String phone_number; //nullable
     private int default_lib_id;
+    private Genre f_genre;
+    private Genre f_book;
+    private int f_author;
 
-    public String getFirst_name() {
-        return first_name;
+    public int getId() {
+        return id;
     }
+
+    public void setId(int id) {this.id = id;}
+    public String getFirst_name() {return first_name;}
 
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
@@ -63,5 +79,28 @@ public class User {
 
     public void setDefault_lib_id(int default_lib_id) {
         this.default_lib_id = default_lib_id;
+    }
+    public Genre getF_genre() {
+        return f_genre;
+    }
+
+    public void setF_genre(Genre f_genre) {
+        this.f_genre = f_genre;
+    }
+
+    public Genre getF_book() {
+        return f_book;
+    }
+
+    public void setF_book(Genre f_book) {
+        this.f_book = f_book;
+    }
+
+    public int getF_author() {
+        return f_author;
+    }
+
+    public void setF_author(int f_author) {
+        this.f_author = f_author;
     }
 }

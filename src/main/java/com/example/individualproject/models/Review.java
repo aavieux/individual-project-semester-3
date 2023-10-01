@@ -1,6 +1,13 @@
 package com.example.individualproject.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Review {
+    public Review(){}
     public Review(int id, int book_id, int user_id, float rating, String description) {
         this.id = id;
         this.book_id = book_id;
@@ -8,7 +15,8 @@ public class Review {
         this.rating = rating;
         this.description = description;
     }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int book_id;
     private int user_id;

@@ -1,12 +1,20 @@
 package com.example.individualproject.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Library {
+    public Library(){}
     public Library(int id, int user_id, String title) {
         this.id = id;
         this.user_id = user_id;
         this.title = title;
     }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int user_id;
     private String title;
