@@ -1,0 +1,38 @@
+# Maven specific
+/target/
+*.iml
+.idea/
+
+# Spring Boot specific
+spring-boot-starter-logging.log
+build/
+!target/
+mvnw
+mvnw.cmd
+
+# Node.js specific
+/node_modules/
+
+# React specific
+/.npm/
+/.yarn/
+/.pnp/
+.pnp.js
+yarn-error.log
+
+# Compiled Java classes
+*.class
+
+# Compiled React files
+/build/
+
+# IDE files
+*.idea
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
