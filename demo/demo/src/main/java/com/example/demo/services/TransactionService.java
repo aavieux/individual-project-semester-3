@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class TransactionService {
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
     @Autowired
     public TransactionService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;

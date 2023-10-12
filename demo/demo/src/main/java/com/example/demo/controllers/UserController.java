@@ -21,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("permitAll()")
     @GetMapping()
     public String userProfile(Model model){
         model.addAttribute("allUsers", userService.getAllUsers());

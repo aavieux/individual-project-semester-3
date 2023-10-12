@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -27,5 +26,9 @@ public class UserService {
     }
     public boolean deleteUser(User user){
         return userRepository.deleteUser(user.getId());
+    }
+
+    public User getUserByEmail(String user_email){
+        return userRepository.getUserByEmail(user_email);
     }
 }

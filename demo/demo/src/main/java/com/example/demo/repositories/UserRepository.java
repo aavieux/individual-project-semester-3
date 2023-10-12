@@ -1,7 +1,6 @@
 package com.example.demo.repositories;
 
 import com.example.demo.models.User;
-import com.example.demo.models.enums.Genre;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,4 +31,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Query(value = "DELETE FROM User u WHERE u.id = :userId_p", nativeQuery = true)
     boolean deleteUser(@Param("userId_p") Integer userId);
+
+    @Query(value = "SELECT FROM User u WHERE u.email = :user_email_p", nativeQuery = true)
+    User getUserByEmail(@Param("user_email_p") String user_email);
 }
