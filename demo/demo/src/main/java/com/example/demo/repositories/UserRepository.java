@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 //@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -17,8 +19,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Modifying //it will change the database
     @Transactional //  If an exception occurs, the transaction is rolled back, reverting any changes made within the method, ensuring that the database remains in a consistent state.
-    @Query(value = "INSERT INTO user (first_name, last_name, email, password, phone_number, f_genre, shadowprofile_id, book_id ) VALUES (:first_name_p, :last_name_p, :email_p, :password_p, :phone_number_p, :f_genre_p, :shadowprofile_id_p, :book_id_p)", nativeQuery = true)
-    boolean addUser(@Param("first_name_p")String first_name,
+    @Query(value = "INSERT INTO user (role, first_name, last_name, email, password, phone_number, f_genre, shadowprofile_id, book_id ) VALUES (:role_p, :first_name_p, :last_name_p, :email_p, :password_p, :phone_number_p, :f_genre_p, :shadowprofile_id_p, :book_id_p)", nativeQuery = true)
+    boolean addUser(@Param("role_p") String role,
+                    @Param("first_name_p")String first_name,
                     @Param("last_name_p") String last_name,
                     @Param("email_p") String email,
                     @Param("password_p") String password,

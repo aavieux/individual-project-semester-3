@@ -10,7 +10,7 @@
 <body>
 
 <!--        Top NAV-->
-<th:block th:include="thInclude/topNavBar"></th:block>
+<th:block th:insert="~{thInclude/topNavBar}"></th:block>
 
 <!--    // CENTER-->
 <div class="contentDiv accountOverview-center-div">
@@ -54,10 +54,10 @@
 </div>
 
 <!--SIDE NAV left-->
-<th:block th:include="thInclude/leftNavBar"></th:block>
+<th:block th:insert="~{thInclude/leftNavBar}"></th:block>
 
 <!--SIDE NAV right YOUR FRIENDS -->
-<th:block th:include="thInclude/friendBar"></th:block>
+<th:block th:insert="~{thInclude/friendBar}"></th:block>
 
 <script src="/./js/js.js"></script>
 </body>

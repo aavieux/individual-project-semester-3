@@ -1,11 +1,13 @@
 package com.example.demo.models;
 import com.example.demo.models.enums.Genre;
+import com.example.demo.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
-//import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.lang.NonNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -13,11 +15,15 @@ import java.util.List;
 @Table(name="\"user\"")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(nullable = false)
     private String first_name;
@@ -53,7 +59,7 @@ public class User {
     private ShadowProfile f_author;
 
     @OneToMany(mappedBy = "user")//ok
-    private List<Review>reviews;
+    private List<Review> reviews;
 
     @OneToMany(mappedBy = "user")//ok
     private List<Transaction> transactions;
@@ -65,6 +71,10 @@ public class User {
         return id;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public String getFirst_name() {
         return first_name;
     }
@@ -73,12 +83,13 @@ public class User {
         return last_name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPhone_number() {
@@ -114,8 +125,14 @@ public class User {
 
 
 
+
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public void setFirst_name(String first_name) {
@@ -160,5 +177,37 @@ public class User {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
