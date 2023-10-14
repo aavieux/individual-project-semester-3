@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.User;
+import com.example.demo.repositories.RelationshipRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RelationshipRepository relationshipRepository;
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RelationshipRepository relationshipRepository) {
         this.userRepository = userRepository;
+        this.relationshipRepository = relationshipRepository;
     }
 
     public List<User> getAllUsers(){
@@ -29,5 +32,19 @@ public class UserService {
 
     public User getUserByEmail(String user_email){
         return userRepository.getUserByEmail(user_email);
+    }
+
+    public List<User> getAllFriends(User user){
+
+        List<Integer> friendListIds = new java.util.ArrayList<>(List.of());
+        List<User> friends = new java.util.ArrayList<>(List.of());
+
+        friendListIds.addAll(relationshipRepository.friendshipRow1(user.getId()));
+        friendListIds.addAll(relationshipRepository.friendshipRow2(user.getId()));
+
+        for (Integer userId : friendListIds){
+            friends.add(userRepository.getUserById(userId));
+        }
+        return friends;
     }
 }

@@ -31,7 +31,7 @@
 
             <div id="account-bio-field">
                 <div id="account-bio-txt">
-                    <p class="margin-top-a margin-bot-a" th:text="${allUsers[0].getFirst_name()} + ' ' + ${allUsers[0].getLast_name()}"></p>
+                    <p class="margin-top-a margin-bot-a" th:text="${authenticatedUser.getFirst_name()} + ' ' + ${authenticatedUser.getLast_name()}"></p>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
 <th:block th:insert="~{thInclude/leftNavBar}"></th:block>
 
 <!--SIDE NAV right YOUR FRIENDS -->
-<th:block th:insert="~{thInclude/friendBar}"></th:block>
+<th:block th:insert="~{thInclude/friendBar }"></th:block>
 
 <script src="/./js/js.js"></script>
 </body>

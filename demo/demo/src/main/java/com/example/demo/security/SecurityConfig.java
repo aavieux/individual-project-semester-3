@@ -7,9 +7,10 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 @Configuration
 @EnableWebSecurity
@@ -17,19 +18,28 @@ public class SecurityConfig {
 
     @Resource
     private final CustomUserDetailsService customUserDetailsService;
+//    @Resource
+//    private final RememberMeServices rememberMeServices;
 
     @Autowired
     public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
+//        this.rememberMeServices = rememberMeServices;
     }
-
+    @Bean
+    RememberMeServices rememberMeServices() {
+        TokenBasedRememberMeServices.RememberMeTokenAlgorithm encodingAlgorithm = TokenBasedRememberMeServices.RememberMeTokenAlgorithm.SHA256;
+        TokenBasedRememberMeServices rememberMe = new TokenBasedRememberMeServices("myKey", customUserDetailsService, encodingAlgorithm);
+        rememberMe.setMatchingAlgorithm(TokenBasedRememberMeServices.RememberMeTokenAlgorithm.MD5);
+        return rememberMe;
+    }
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(rQ -> {
+            rQ.requestMatchers("/js/**","/css/**").permitAll();
             rQ.requestMatchers("/", "/myprofile").authenticated();
-            rQ.requestMatchers("/css/**", "/js/**", "/pictures/**").authenticated();
-
+            rQ.requestMatchers("/pictures/**").authenticated();
         });
 //        http.sessionManagement(sessionAuthenticationStrategy ->
 //                sessionAuthenticationStrategy.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -38,6 +48,12 @@ public class SecurityConfig {
         http.formLogin(form -> form
                 .loginPage("/login")
                 .permitAll());
+
+        http.rememberMe((remember) -> {
+            remember.rememberMeServices(rememberMeServices());
+            remember.rememberMeParameter("remember-me");
+        });
+
         http.logout(logout -> logout
                 .logoutUrl("/logout") // specify the logout URL
                 .logoutSuccessUrl("/") // specify where to redirect after logout

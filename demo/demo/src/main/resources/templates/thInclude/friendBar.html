@@ -1,22 +1,26 @@
-<div class="d-flex flex-column flex-shrink-0 p-2-rem text-white sideNavBarHP right0 g-r-g-20px rightNavBar">
-    <div class="yfriends">
-        <p class="yfriendstxt">Your friends</p>
-    </div>
-    <div class="friend-bar">
-        <div class="chat-overlay"></div>
-        <div class="friend-bar-image-holder">
-            <img src="/pictures/icons8-avatar-48.png" alt="avatar">
+<th:block th:fragment="contentFragment">
+    <div class="d-flex flex-column flex-shrink-0 p-2-rem text-white sideNavBarHP right0 g-r-g-20px rightNavBar">
+        <div class="yfriends">
+            <p class="yfriendstxt">Your friends</p>
         </div>
-        <div class="friend-bar-contents">
-            <div class="chat-name">
-                <p>User name</p>
-            </div>
-            <div class="chat-status">
-                <p>User status</p>
-            </div>
+        <th:block th:each="friend, iterStat : ${allFriends}">
+            <div class="friend-bar">
+                <div class="chat-overlay"></div>
+                <div class="friend-bar-image-holder">
+                    <img src="/pictures/icons8-avatar-48.png" alt="avatar">
+                </div>
+                <div class="friend-bar-contents">
+                    <div class="chat-name">
+                        <p th:text="${friend.getFirst_name()}"></p>
+                    </div>
+                    <div class="chat-status">
+                        <p>User status</p>
+                    </div>
 
-        </div>
+                </div>
+
+            </div>
+        </th:block>
 
     </div>
-
-</div>
+</th:block>

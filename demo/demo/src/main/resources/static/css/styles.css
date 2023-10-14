@@ -14,6 +14,9 @@ html,body{
 .w-inherit{
     width:inherit;
 }
+.w-30px{
+    width: 30px;
+}
 .contentCenter{
     display:flex;
     justify-content: center;
@@ -78,6 +81,63 @@ html,body{
 .margin-bot-a{
     margin-bottom: auto;
 }
+/*-------------------------------------------------------*/
+/*LOGIN*/
+.loginBody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f2f2f2;
+}
+.login-container {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    height: 50%;
+    width: 50%;
+}
+.loginButton{
+    background-color: white;
+    border: 2px solid #4CAF50;
+    color: #4CAF50;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: xx-large;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+input[type="text"],
+input[type="password"],
+input[type="checkbox"] {
+
+    /*width: 100%;*/
+    padding: 8px;
+    font-size: xx-large;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    /*margin: 10px;*/
+    font-family: math;
+    margin-right: auto;
+}
+.rememberMe-container{
+    display: flex;
+    flex-direction: row;
+}
+#rememberMe-txt{
+    font-size: x-large;
+    text-align: center;
+    padding: 8px;
+    margin-left: auto;
+}
+
 /*-------------------------------------------------------*/
 /*search bar top nav*/
 .wrapper {
