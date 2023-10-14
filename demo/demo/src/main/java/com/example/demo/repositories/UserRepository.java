@@ -32,9 +32,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM User u WHERE u.id = :userId_p", nativeQuery = true)
+    @Query(value = "DELETE FROM user u WHERE u.id = :userId_p", nativeQuery = true)
     boolean deleteUser(@Param("userId_p") Integer userId);
 
-    @Query(value = "SELECT FROM User u WHERE u.email = :user_email_p", nativeQuery = true)
+    @Query(value = "SELECT * FROM [user] u WHERE u.email = :user_email_p", nativeQuery = true)
     User getUserByEmail(@Param("user_email_p") String user_email);
 }

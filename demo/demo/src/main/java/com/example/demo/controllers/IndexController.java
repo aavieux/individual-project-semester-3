@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.http.HttpClient;
 import java.util.List;
 
 @Controller
@@ -32,4 +33,9 @@ public class IndexController {
         model.addAttribute("allBooks", bookService.getAllBooks());
         return "index"; // This will look for a Thymeleaf template named "index.html"
     }
+
+//    @GetMapping("/logout")
+//    String logout(){
+//        return Ht;
+//    }
 }
