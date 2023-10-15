@@ -48,20 +48,20 @@ html,body{
 .rotate{
     transition: width 2s, height 2s, transform 1s;
 }
-.rotate:hover{
+/*.rotate:hover{*/
 
-    -webkit-transform: rotateZ(20deg);
-    -moz-transform: rotateZ(20deg);
-    transform: rotateZ(20deg);
+/*    -webkit-transform: rotateZ(20deg);*/
+/*    -moz-transform: rotateZ(20deg);*/
+/*    transform: rotateZ(20deg);*/
 
-}
+/*}*/
 .mirror-image{
     transition: width 2s, height 2s, transform 0.5s;
 }
-.mirror-image:hover {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-}
+/*.mirror-image:hover {*/
+/*    -webkit-transform: scaleX(-1);*/
+/*    transform: scaleX(-1);*/
+/*}*/
 .display-grid{
     display: grid;
 }

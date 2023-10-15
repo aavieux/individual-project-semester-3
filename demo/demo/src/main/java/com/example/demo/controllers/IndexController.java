@@ -31,7 +31,7 @@ public class IndexController {
 
         model.addAttribute("allUsers", userService.getAllUsers());
         model.addAttribute("allBooks", bookService.getAllBooks());
-        model.addAttribute("allFriends", userService.getAllFriends(authenticatedUser));
+        model.addAttribute("allFriends", userService.getAllFriendsByUser(authenticatedUser));
 
         return "index"; // This will look for a Thymeleaf template named "index.html"
     }

@@ -24,7 +24,7 @@ public class UserController {
     private void getUserAndFriendsToModel(Model model, Authentication authentication) {
 //        model.addAttribute("allUsers", userService.getAllUsers());
         model.addAttribute("authenticatedUser", getAuthenticatedUser(authentication));
-        model.addAttribute("allFriends", userService.getAllFriends(getAuthenticatedUser(authentication)));
+        model.addAttribute("allFriends", userService.getAllFriendsByUser(getAuthenticatedUser(authentication)));
     }
 
     @Autowired
@@ -58,6 +58,9 @@ public class UserController {
     }
     @GetMapping("/{id}")
     public String  getUserPage(@PathVariable(value = "id") Integer userId, Model model, Authentication authentication){
+        if (getAuthenticatedUser(authentication).getId() == userId){
+            return "redirect:/users/myprofile";
+        }
         getUserAndFriendsToModel(model,authentication);
         User userPageUser = userService.getUserById(userId);
         model.addAttribute("userPageUser", userPageUser);
