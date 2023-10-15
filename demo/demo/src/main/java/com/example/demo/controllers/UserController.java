@@ -64,6 +64,10 @@ public class UserController {
         getUserAndFriendsToModel(model,authentication);
         User userPageUser = userService.getUserById(userId);
         model.addAttribute("userPageUser", userPageUser);
+        model.addAttribute("relationType", userService.checkFriendship(getAuthenticatedUser(authentication),userPageUser));
+        System.out.println("---------------------------------------------------------------------------------------------------");
+        System.out.println(userService.checkFriendship(getAuthenticatedUser(authentication),userPageUser).toString());
+        System.out.println("---------------------------------------------------------------------------------------------------");
         return "profileOverview";
     }
 

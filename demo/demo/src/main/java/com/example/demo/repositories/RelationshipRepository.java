@@ -23,12 +23,12 @@ public interface RelationshipRepository extends JpaRepository<Transaction, Integ
     @Query(value = "SELECT * FROM friend_request", nativeQuery = true)
     List<FriendRequest> getAllFriendRequests();
 
-    @Query(value ="SELECT recipient FROM friend_request WHERE sender LIKE :recipient_id_p", nativeQuery = true)
-    List<FriendRequest> getOutcommingFriendRequestsByUsers(@Param ("sender_id_p") Integer sender_id);
+    @Query(value ="SELECT recipient FROM friend_request WHERE sender LIKE :sender_id_p", nativeQuery = true)
+    List<FriendRequest> getOutcomingFriendRequestsByUsers(@Param ("sender_id_p") Integer sender_id);
 
-    @Query(value ="SELECT sender FROM friend_request WHERE recipient LIKE :sender_id_p", nativeQuery = true)
-    List<FriendRequest> getIncommingFriendRequestsByUser(@Param ("recipient_id_p") Integer recipient_id);
+    @Query(value ="SELECT sender FROM friend_request WHERE recipient LIKE :recipient_id_p", nativeQuery = true)
+    List<FriendRequest> getIncomingFriendRequestsByUser(@Param ("recipient_id_p") Integer recipient_id);
 
     @Query(value = "INSERT INTO friend_request (sender, recipient ) VALUES (:sender_id_p, :recipient_id_p)", nativeQuery = true)
-    boolean addFriendRequest(@Param(":sender_id_p") Integer sender_id, @Param("recipient_id_p") Integer recipient_id);
+    boolean addFriendRequest(@Param("sender_id_p") Integer sender_id, @Param("recipient_id_p") Integer recipient_id);
 }

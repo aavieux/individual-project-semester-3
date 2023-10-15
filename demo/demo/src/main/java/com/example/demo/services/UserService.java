@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.models.FriendRequest;
 import com.example.demo.models.User;
+import com.example.demo.models.enums.FriendRequestStatusNoDb;
 import com.example.demo.repositories.RelationshipRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,27 +66,36 @@ public class UserService {
         }
         return friends;
     }
-    @CacheEvict(value = "allFriendShips", allEntries = true)
+    @CacheEvict(value = {"userFriends"}, allEntries = true)
     public boolean addFriendship(User user1, User user2){
         return relationshipRepository.addFriendship(user1.getId(), user2.getId());
     }
 
-    public boolean chceckFriendship(User authenticatedUser,User withUser){
+    public FriendRequestStatusNoDb checkFriendship(User authenticatedUser, User withUser){
         if (getAllFriendsByUser(authenticatedUser).contains(withUser)) {
-            return true;
+            return FriendRequestStatusNoDb.FRIENDS;
         }
-        else if ()
-
+        for (FriendRequest friendRequest: getIncomingFriendRequestsByUser(authenticatedUser) ) {
+            if (friendRequest.getSender() == withUser){
+                return FriendRequestStatusNoDb.INCOMING;
+            }
+        }
+        for (FriendRequest friendRequest: getOutcomingFriendRequestsByUser(authenticatedUser) ) {
+            if (friendRequest.getRecipient() == withUser){
+                return FriendRequestStatusNoDb.OUTCOMING;
+            }
+        }
+        return FriendRequestStatusNoDb.NOT_FRIENDS;
     }
     //    --------------------------FRIEND REQUESTS------------------------
 
-    @Cacheable(value = "userIncommingFriendRequests", key = "#user.id")
-    public List<FriendRequest> getIncommingFriendRequestsByUser(User user){
-        return relationshipRepository.getIncommingFriendRequestsByUser(user.getId());
+    @Cacheable(value = "userIncomingFriendRequests", key = "#user.id")
+    public List<FriendRequest> getIncomingFriendRequestsByUser(User user){
+        return relationshipRepository.getIncomingFriendRequestsByUser(user.getId());
     }
-    @Cacheable(value = "userOutcommingFriendRequests", key = "#user.id")
-    public List<FriendRequest> getOutcommingFriendRequestsByUser(User user){
-        return relationshipRepository.getOutcommingFriendRequestsByUsers(user.getId());
+    @Cacheable(value = "userOutcomingFriendRequests", key = "#user.id")
+    public List<FriendRequest> getOutcomingFriendRequestsByUser(User user){
+        return relationshipRepository.getOutcomingFriendRequestsByUsers(user.getId());
     }
 
 
