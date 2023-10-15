@@ -47,6 +47,8 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<Transaction>transactions;
 
+    @ManyToMany(mappedBy = "books")
+    private List<Library> libraries;
 
     public int getId() {
         return id;

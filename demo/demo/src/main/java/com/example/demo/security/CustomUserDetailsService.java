@@ -1,7 +1,5 @@
 package com.example.demo.security;
-
 import com.example.demo.models.User;
-import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +22,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail()).password(user.getPassword()).authorities("USER").build();
         return userDetails;
     }
-
-
-
 }

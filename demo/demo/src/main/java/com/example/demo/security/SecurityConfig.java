@@ -38,8 +38,8 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(rQ -> {
             rQ.requestMatchers("/js/**","/css/**").permitAll();
-            rQ.requestMatchers("/", "/myprofile").authenticated();
-            rQ.requestMatchers("/pictures/**").authenticated();
+            rQ.anyRequest().authenticated();
+
         });
 //        http.sessionManagement(sessionAuthenticationStrategy ->
 //                sessionAuthenticationStrategy.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

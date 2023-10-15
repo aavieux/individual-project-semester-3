@@ -11,7 +11,6 @@
 
 </head>
 <body>
-    <button id="openModal">Open Modal</button>
     <div class = "modal-ex333" id="modal-ex333">
         <div class="modal-inner" id="modal-inner">
             <h2> Cool tutorial!</h2>
@@ -32,9 +31,8 @@
     <div class="rAdded">
         <p class="rAddedtxt">Recently added</p>
     </div>
-    <div class="rAddedField" th:each="book, iterStat : ${allBooks}">
-
-        <div class="book-contents">
+    <div class="rAddedField">
+        <div class="book-contents" th:each="book, iterStat : ${allBooks}">
 
             <div class="image-holder">
                 <div class="middle">

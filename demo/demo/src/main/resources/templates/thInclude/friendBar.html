@@ -3,11 +3,13 @@
         <div class="yfriends">
             <p class="yfriendstxt">Your friends</p>
         </div>
-        <th:block th:each="friend, iterStat : ${allFriends}">
+        <th:block th:each="friend, iterStat : ${allFriends}" >
+
             <div class="friend-bar">
                 <div class="chat-overlay"></div>
                 <div class="friend-bar-image-holder">
-                    <img src="/pictures/icons8-avatar-48.png" alt="avatar">
+                    <img class="chatImage" th:if="${friend.getProfile_pic_url() != null and friend.getProfile_pic_url() != ''}" th:src="${friend.getProfile_pic_url()}" alt="User Profile Picture">
+                    <img class="chatImage" th:unless="${friend.getProfile_pic_url() != null and friend.getProfile_pic_url() != ''}" src="/pictures/icons8-avatar-48.png"  alt="Default Profile Picture">
                 </div>
                 <div class="friend-bar-contents">
                     <div class="chat-name">
@@ -16,11 +18,12 @@
                     <div class="chat-status">
                         <p>User status</p>
                     </div>
-
                 </div>
-
+                <form th:action="@{/redirectToUser}" method="post">
+                    <input type="hidden" id="userIdInput" name="userId" th:value="${friend.getId()}">
+                    <button type="submit">Go to User</button>
+                </form>
             </div>
         </th:block>
-
     </div>
 </th:block>

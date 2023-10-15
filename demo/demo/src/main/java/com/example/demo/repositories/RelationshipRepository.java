@@ -12,5 +12,4 @@ public interface RelationshipRepository extends JpaRepository<Transaction, Integ
     List<Integer> friendshipRow1(@Param ("user_id_p") Integer user_id);
     @Query(value ="SELECT user_id2 FROM friendship WHERE user_id1 LIKE :user_id_p", nativeQuery = true)
     List<Integer> friendshipRow2(@Param ("user_id_p") Integer user_id);
-
 }

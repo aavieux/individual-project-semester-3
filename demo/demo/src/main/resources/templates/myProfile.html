@@ -23,7 +23,8 @@
 <!--                        <img th:src="" th:alt="">-->
                     </div>
                     <div id="account-image">
-                        <img id="profile-pic" src="/pictures/bubble-gum-avatar-icon.png" alt="avatar">
+                        <img class="profile-pic" th:if="${authenticatedUser.getProfile_pic_url() != null and authenticatedUser.getProfile_pic_url() != ''}" th:src="${authenticatedUser.getProfile_pic_url()}" alt="User Profile Picture">
+                        <img class="profile-pic" th:unless="${authenticatedUser.getProfile_pic_url() != null and authenticatedUser.getProfile_pic_url() != ''}" src="/pictures/bubble-gum-avatar-icon.png" alt="Default Profile Picture">
                     </div>
 
                 </div>
@@ -48,7 +49,6 @@
             </div>
         </div>
         <div id="account-details">
-
         </div>
     </div>
 </div>

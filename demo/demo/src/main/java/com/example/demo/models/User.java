@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -40,6 +39,9 @@ public class User implements UserDetails {
     @Column(nullable = true)
     private String phone_number; //nullable
 
+    @Column(nullable = true)
+    private String profile_pic_url;
+
     @OneToMany(mappedBy = "user")
     private List<Library> collection;
 
@@ -64,7 +66,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")//ok
     private List<Transaction> transactions;
 
-    //friends //TODO
 
 
     public int getId() {
@@ -120,12 +121,9 @@ public class User implements UserDetails {
         return transactions;
     }
 
-
-
-
-
-
-
+    public String getProfile_pic_url() {
+        return profile_pic_url;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -180,7 +178,9 @@ public class User implements UserDetails {
     }
 
 
-
+    public void setProfile_pic_url(String profile_pic_url) {
+        this.profile_pic_url = profile_pic_url;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

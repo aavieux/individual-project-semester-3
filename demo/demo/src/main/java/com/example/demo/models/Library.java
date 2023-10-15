@@ -26,6 +26,11 @@ public class Library {
     @Column(nullable = false)
     private String title;
 
-    @ManyToMany //TODO
+    @ManyToMany
+    @JoinTable(
+            name = "library_books",
+            joinColumns = @JoinColumn(name = "library_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private List<Book> books;
 }

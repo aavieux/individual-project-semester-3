@@ -127,6 +127,9 @@ input[type="checkbox"] {
     font-family: math;
     margin-right: auto;
 }
+input#searchQueryInput{
+    text-align: left;
+}
 .rememberMe-container{
     display: flex;
     flex-direction: row;
@@ -258,28 +261,28 @@ input[type="checkbox"] {
     margin-right: 280px;
     background-color: #f3f3f3!important;
 }
-.rAdded{
+.rAdded, .yourLibraries{
     height: 65px;
 }
-.rAddedtxt{
+.rAddedtxt, .yourLibrariestxt{
     padding-left: 25px;
     font-size: xx-large;
     margin-top: 15px;
     margin-left: 15px;
     color:#939393;
 }
-.rAddedField {
+.rAddedField, .yourLibrariesField{
     width: -webkit-fill-available;
-    height: 250px;
+    height: 350px;
     /*background-color: black;*/
-    justify-content: space-between;
+    justify-content: space-evenly;
     overflow-x: scroll;
     display: inline-flex;
     margin-left: 25px;
     grid-gap: 15px;
 }
 
-.rAddedField:after{
+.rAddedField:after, .yourLibrariesField:after{
     content: "";
     background: #adb5bd;
     position: absolute;
@@ -288,7 +291,7 @@ input[type="checkbox"] {
     height: 65%;
     width: 1px;
 }
-.rAddedField::-webkit-scrollbar {
+.rAddedField::-webkit-scrollbar, .yourLibrariesField::-webkit-scrollbar{
     display: none;  /* Safari and Chrome */
 }
 .rForYou{
@@ -388,6 +391,14 @@ input[type="checkbox"] {
 .friend-bar:hover .friend-bar-contents {
     color:white;
 }
+.chatImage{
+    height: inherit;
+    padding: 5px;
+}
+
+
+
+
 .book-contents {
     position: relative;
     height: 250px;
@@ -613,7 +624,7 @@ div#account-image{
     margin: 0 35%;
     position: relative;
 }
-img#profile-pic{
+.profile-pic{
     position: absolute;
     top: 50%;
     left: 50%;

@@ -47,4 +47,7 @@ public class UserService {
         }
         return friends;
     }
+    public User getUserById(Integer userId){
+        return userRepository.getUserById(userId);
+    }
 }
