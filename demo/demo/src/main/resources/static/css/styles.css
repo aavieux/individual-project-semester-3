@@ -195,6 +195,23 @@ input#searchQueryInput{
 .h-inherit{
     height:inherit;
 }
+.searchResult {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.searchResultImage {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.searchResultInfo {
+    flex: 1;
+}
 /*-------------------------------------------------------*/
 .rightB{
 
@@ -399,7 +416,7 @@ input#searchQueryInput{
 
 
 
-.book-contents {
+.book-contents, .library-contents {
     position: relative;
     height: 250px;
 

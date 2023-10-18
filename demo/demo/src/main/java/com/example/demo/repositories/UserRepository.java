@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 //@Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM [user]", nativeQuery = true)
     List<User> getAllUsers();
 
@@ -27,17 +27,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                     @Param("password_p") String password,
                     @Param("phone_number_p") String phone_number,
                     @Param("f_genre_p")String genre,
-                    @Param("shadowprofile_id_p") Integer shadowprofile_id,
-                    @Param("book_id_p") Integer book_id);
+                    @Param("shadowprofile_id_p") Long shadowprofile_id,
+                    @Param("book_id_p") Long book_id);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM user u WHERE u.id = :userId_p", nativeQuery = true)
-    boolean deleteUser(@Param("userId_p") Integer userId);
+    boolean deleteUser(@Param("userId_p") Long userId);
 
     @Query(value = "SELECT * FROM [user] u WHERE u.email = :user_email_p", nativeQuery = true)
     User getUserByEmail(@Param("user_email_p") String user_email);
 
     @Query(value = "SELECT * FROM [user] u WHERE u.id = :user_id_p", nativeQuery = true)
-    User getUserById(@Param("user_id_p") Integer user_id);
+    User getUserById(@Param("user_id_p") Long user_id);
 }

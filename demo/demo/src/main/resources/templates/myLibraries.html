@@ -18,38 +18,26 @@
     <div class="yourLibraries">
       <p class="yourLibrariestxt">Your Libraries</p>
     </div>
+
     <div class="yourLibrariesField">
-<!--      <div class="book-contents" th:each="book, iterStat : ${allBooks}">-->
-
-<!--        <div class="image-holder">-->
-<!--          <div class="middle">-->
-<!--            <div class="hover-button">-->
-<!--              <img class="image" src="/pictures/icons8-view-48.png">-->
-<!--            </div>-->
-<!--            <div class="hover-button">-->
-<!--              <img class="image" src="/pictures/icons8-star-48.png">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <img class="h-inherit" th:src="${book.getCover_url()}" th:alt="${book.getTitle()} + 's image'">-->
-<!--        </div>-->
-
-<!--        <div class="info-holder">-->
-<!--          <div class="title-holder">-->
-<!--            <p th:text="${book.getTitle()}"></p>-->
-<!--          </div>-->
-
-<!--          <div class="author-txt">-->
-<!--            <div class="highlight"></div>-->
-<!--            <span th:text="${book.getAuthor().getPseudonym()}"></span>-->
-<!--          </div>-->
-
-<!--        </div>-->
-<!--        <div>-->
-
-<!--        </div>-->
-<!--      </div>-->
-
-
+      <div class="library-contents" th:each = "library, interStat : ${allLibrariesForAuthenticatedUser} ">
+        <div class="image-holder">
+          <div class="middle">
+            <div class="hover-button">
+              <img class="image" src="/pictures/icons8-view-48.png" >
+            </div>
+            <div class="hover-button">
+              <img class="image" src="/pictures/icons8-star-48.png">
+            </div>
+          </div>
+          <img class="h-inherit" src="/pictures/hand-drawn-seamless-pattern-book-doodle-elements-education-concept_253081-84.avif">
+        </div>
+        <div class="info-holder">
+          <div class="title-holder">
+            <p th:text="${library.getTitle()}"></p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="rForYou">
@@ -58,7 +46,6 @@
     <div class="rForYouField">
 
     </div>
-
   </div>
 
   <!--SIDE NAV left-->

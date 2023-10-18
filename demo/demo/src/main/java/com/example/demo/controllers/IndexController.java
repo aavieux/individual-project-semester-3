@@ -24,7 +24,7 @@ public class IndexController {
         this.bookService = bookService;
     }
 
-    @GetMapping
+    @GetMapping()
     public String home(Model model, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User authenticatedUser = userService.getUserByEmail(userDetails.getUsername());
@@ -37,7 +37,7 @@ public class IndexController {
     }
 
     @PostMapping("/redirectToUser")
-    public String postUserPage(@RequestParam("userId") Integer userId, RedirectAttributes attributes) {
+    public String postUserPage(@RequestParam("userId") Long userId, RedirectAttributes attributes) {
         // Construct the dynamic URL based on userId
         String redirectUrl = "/users/" + userId;
 

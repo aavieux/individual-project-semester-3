@@ -15,7 +15,7 @@ public class ShadowProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(nullable = true)
     private String first_name;
@@ -36,7 +36,7 @@ public class ShadowProfile {
     private List<User> followers;
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -65,7 +65,7 @@ public class ShadowProfile {
     }
 
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

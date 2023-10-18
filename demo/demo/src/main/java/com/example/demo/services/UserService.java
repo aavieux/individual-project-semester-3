@@ -3,7 +3,8 @@ package com.example.demo.services;
 import com.example.demo.models.FriendRequest;
 import com.example.demo.models.User;
 import com.example.demo.models.enums.FriendRequestStatusNoDb;
-import com.example.demo.repositories.RelationshipRepository;
+import com.example.demo.repositories.FriendRequestRepository;
+import com.example.demo.repositories.FriendshipRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -15,11 +16,13 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final RelationshipRepository relationshipRepository;
+    private final FriendshipRepository friendShipRepository;
+    private final FriendRequestRepository friendRequestRepository;
     @Autowired
-    public UserService(UserRepository userRepository, RelationshipRepository relationshipRepository) {
+    public UserService(UserRepository userRepository, FriendshipRepository friendShipRepository, FriendRequestRepository friendRequestRepository) {
         this.userRepository = userRepository;
-        this.relationshipRepository = relationshipRepository;
+        this.friendShipRepository = friendShipRepository;
+        this.friendRequestRepository = friendRequestRepository;
     }
 
 //-----------------------------------------USERS-----------------------------------
@@ -41,7 +44,7 @@ public class UserService {
         return userRepository.getUserByEmail(user_email);
     }
 
-    public User getUserById(Integer userId){
+    public User getUserById(Long userId){
         return userRepository.getUserById(userId);
     }
 
@@ -55,20 +58,20 @@ public class UserService {
     @Cacheable(value = "userFriends", key = "#user.id")
     public List<User> getAllFriendsByUser(User user){
 
-        List<Integer> friendListIds = new java.util.ArrayList<>(List.of());
+        List<Long> friendListIds = new java.util.ArrayList<>(List.of());
         List<User> friends = new java.util.ArrayList<>(List.of());
 
-        friendListIds.addAll(relationshipRepository.friendshipRow1(user.getId()));
-        friendListIds.addAll(relationshipRepository.friendshipRow2(user.getId()));
+        friendListIds.addAll(friendShipRepository.friendshipRow1(user.getId()));
+        friendListIds.addAll(friendShipRepository.friendshipRow2(user.getId()));
 
-        for (Integer userId : friendListIds){
+        for (Long userId : friendListIds){
             friends.add(userRepository.getUserById(userId));
         }
         return friends;
     }
     @CacheEvict(value = {"userFriends"}, allEntries = true)
     public boolean addFriendship(User user1, User user2){
-        return relationshipRepository.addFriendship(user1.getId(), user2.getId());
+        return friendShipRepository.addFriendship(user1.getId(), user2.getId());
     }
 
     public FriendRequestStatusNoDb checkFriendship(User authenticatedUser, User withUser){
@@ -91,11 +94,11 @@ public class UserService {
 
     @Cacheable(value = "userIncomingFriendRequests", key = "#user.id")
     public List<FriendRequest> getIncomingFriendRequestsByUser(User user){
-        return relationshipRepository.getIncomingFriendRequestsByUser(user.getId());
+        return friendRequestRepository.getIncomingFriendRequestsByUser(user.getId());
     }
     @Cacheable(value = "userOutcomingFriendRequests", key = "#user.id")
     public List<FriendRequest> getOutcomingFriendRequestsByUser(User user){
-        return relationshipRepository.getOutcomingFriendRequestsByUsers(user.getId());
+        return friendRequestRepository.getOutcomingFriendRequestsByUsers(user.getId());
     }
 
 

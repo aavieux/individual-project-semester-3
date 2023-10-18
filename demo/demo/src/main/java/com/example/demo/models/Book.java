@@ -19,7 +19,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -50,7 +50,7 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     private List<Library> libraries;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -87,7 +87,7 @@ public class Book {
     }
 
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

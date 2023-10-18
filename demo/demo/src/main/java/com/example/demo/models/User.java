@@ -18,7 +18,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -68,7 +68,7 @@ public class User implements UserDetails {
 
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -125,7 +125,7 @@ public class User implements UserDetails {
         return profile_pic_url;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
