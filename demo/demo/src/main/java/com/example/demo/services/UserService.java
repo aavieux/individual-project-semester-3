@@ -37,7 +37,7 @@ public class UserService {
     }
     @CacheEvict(value = "allUsers", allEntries = true)
     public boolean deleteUser(User user){
-        return userRepository.deleteUser(user.getId());
+        return userRepository.deleteUserById(user.getId());
     }
 
     public User getUserByEmail(String user_email){

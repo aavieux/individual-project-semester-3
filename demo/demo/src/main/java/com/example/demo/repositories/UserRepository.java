@@ -6,11 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
-import java.util.Optional;
 
 //@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -33,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM user u WHERE u.id = :userId_p", nativeQuery = true)
-    boolean deleteUser(@Param("userId_p") Long userId);
+    boolean deleteUserById(@Param("userId_p") Long userId);
 
     @Query(value = "SELECT * FROM [user] u WHERE u.email = :user_email_p", nativeQuery = true)
     User getUserByEmail(@Param("user_email_p") String user_email);
