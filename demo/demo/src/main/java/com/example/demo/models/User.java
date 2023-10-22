@@ -8,12 +8,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
+import lombok.Builder;
+import lombok.Singular;
+import java.util.Set;
 
 @Entity
 //@Data
 @Table(name="\"user\"")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User implements UserDetails {
 
     @Id

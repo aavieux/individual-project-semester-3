@@ -12,23 +12,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+import java.util.Optional;
+
+@RestController
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
     private final BookService bookService;
 
 
-    public User getAuthenticatedUser(Authentication authentication){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userService.getUserByEmail(userDetails.getUsername());
-    }
-
-    private void getUserAndFriendsToModel(Model model, Authentication authentication) {
-//        model.addAttribute("allUsers", userService.getAllUsers());
-        model.addAttribute("authenticatedUser", getAuthenticatedUser(authentication));
-        model.addAttribute("allFriends", userService.getAllFriendsByUser(getAuthenticatedUser(authentication)));
-    }
+//    public Optional<User> getAuthenticatedUser(Authentication authentication){
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        return userService.getUserByEmail(userDetails.getUsername());
+//    }
+//
+//    private void getUserAndFriendsToModel(Model model, Authentication authentication) {
+////        model.addAttribute("allUsers", userService.getAllUsers());
+//        model.addAttribute("authenticatedUser", getAuthenticatedUser(authentication));
+//        model.addAttribute("allFriends", userService.getAllFriendsByUser(getAuthenticatedUser(authentication)));
+//    }
 
     @Autowired
     public UserController(UserService userService, BookService bookService){

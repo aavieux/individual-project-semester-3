@@ -25,6 +25,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM book b WHERE b.id LIKE :book_id:p", nativeQuery = true)
+    @Query(value = "DELETE FROM book b WHERE b.id LIKE :book_id_p", nativeQuery = true)
     boolean deleteBookById(@Param("book_id_p") Long book_id);
 }

@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
+import java.util.Optional;
 
 //@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -34,8 +35,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean deleteUserById(@Param("userId_p") Long userId);
 
     @Query(value = "SELECT * FROM [user] u WHERE u.email = :user_email_p", nativeQuery = true)
-    User getUserByEmail(@Param("user_email_p") String user_email);
+    Optional<User> getUserByEmail(@Param("user_email_p") String user_email);
 
     @Query(value = "SELECT * FROM [user] u WHERE u.id = :user_id_p", nativeQuery = true)
-    User getUserById(@Param("user_id_p") Long user_id);
+    Optional<User> getUserById(@Param("user_id_p") Long user_id);
 }
