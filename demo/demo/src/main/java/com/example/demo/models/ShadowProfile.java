@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class ShadowProfile {
     private List<Book> collection;
 
     @OneToMany(mappedBy = "f_author")//ok
+    @JsonManagedReference
     private List<User> followers;
 
 

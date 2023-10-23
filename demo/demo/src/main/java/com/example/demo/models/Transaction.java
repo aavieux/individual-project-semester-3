@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import com.example.demo.models.enums.Status;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Transaction {
 
     @ManyToOne //
     @JoinColumn(name="user_id",nullable = false)
+    @JsonBackReference
     private User user;
 
     @ManyToOne //

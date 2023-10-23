@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import com.example.demo.models.enums.Genre;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,6 +43,7 @@ public class Book {
     private List<Review> reviews; // ok
 
     @OneToMany(mappedBy = "f_book") // ok // f_book
+    @JsonManagedReference
     private List<User> followers;
 
     @OneToMany(mappedBy = "book")

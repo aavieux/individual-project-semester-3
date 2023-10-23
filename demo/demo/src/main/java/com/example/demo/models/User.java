@@ -1,7 +1,9 @@
 package com.example.demo.models;
 import com.example.demo.models.enums.Genre;
 import com.example.demo.models.enums.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,6 +51,7 @@ public class User implements UserDetails {
     private String profile_pic_url;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Library> collection;
 
     //favourites
@@ -59,17 +62,21 @@ public class User implements UserDetails {
     //null default
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = true)
+    @JsonBackReference //
     private Book f_book;
 
     //null default
     @ManyToOne
     @JoinColumn(name = "shadowprofile_id", nullable = true)
+    @JsonBackReference
     private ShadowProfile f_author;
 
     @OneToMany(mappedBy = "user")//ok
+    @JsonManagedReference
     private List<Review> reviews;
 
     @OneToMany(mappedBy = "user")//ok
+    @JsonManagedReference
     private List<Transaction> transactions;
 
 

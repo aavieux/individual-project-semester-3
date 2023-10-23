@@ -54,6 +54,7 @@ public class UserController {
             { // try to serialize it
                 Optional<User> userOptional = userService.getUserByEmail(((UserDetails) authentication.getPrincipal()).getUsername());
                 User user = userOptional.orElse(null);
+
                 if (user == null){
 
                     return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON");
