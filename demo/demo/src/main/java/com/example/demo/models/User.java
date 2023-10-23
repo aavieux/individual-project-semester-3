@@ -1,6 +1,7 @@
 package com.example.demo.models;
 import com.example.demo.models.enums.Genre;
 import com.example.demo.models.enums.Role;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +34,7 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String last_name;
+
 
     @Column(nullable = false)
     private String email;
