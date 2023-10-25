@@ -23,7 +23,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name="user_id",nullable = false)
-    @JsonBackReference
+//    @JsonBackReference
     private User user;
 
     @Column(nullable = false)

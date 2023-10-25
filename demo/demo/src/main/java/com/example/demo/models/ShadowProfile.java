@@ -1,10 +1,12 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -30,11 +32,12 @@ public class ShadowProfile {
     @Column(nullable = true)
     private String profile_pic_url;
 
-    @OneToMany(mappedBy = "author")//ok
-    private List<Book> collection;
+//    @OneToMany(mappedBy = "author")//ok
+//    private List<Book> collection;
 
     @OneToMany(mappedBy = "f_author")//ok
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
     private List<User> followers;
 
 
@@ -58,9 +61,9 @@ public class ShadowProfile {
         return profile_pic_url;
     }
 
-    public List<Book> getCollection() {
-        return collection;
-    }
+//    public List<Book> getCollection() {
+//        return collection;
+//    }
 
     public List<User> getFollowers() {
         return followers;
@@ -87,9 +90,9 @@ public class ShadowProfile {
         this.profile_pic_url = profile_pic_url;
     }
 
-    public void setCollection(List<Book> collection) {
-        this.collection = collection;
-    }
+//    public void setCollection(List<Book> collection) {
+//        this.collection = collection;
+//    }
 
     public void setFollowers(List<User> followers) {
         this.followers = followers;

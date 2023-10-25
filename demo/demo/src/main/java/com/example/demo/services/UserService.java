@@ -44,12 +44,20 @@ public class UserService {
         return userRepository.deleteUserById(user.getId());
     }
 
-    public Optional<User> getUserByEmail(String user_email){
-        return userRepository.getUserByEmail(user_email);
+    public User getUserByEmail(String user_email){
+        Optional<User> optionalUser = userRepository.getUserByEmail(user_email);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        }
+        else {
+            return null;
+        }
     }
 
-    public Optional<User> getUserById(Long userId){
-        return userRepository.getUserById(userId);
+    public User getUserById(Long userId){
+        Optional<User> optionalUser = userRepository.getUserById(userId);
+        return optionalUser.eors (null);
+
     }
 
 
@@ -106,10 +114,5 @@ public class UserService {
     }
 
 
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User user = getUserByEmail(email);
-//        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail()).password(user.getPassword()).authorities("USER").build();
-//        return userDetails;
-//    }
+
 }

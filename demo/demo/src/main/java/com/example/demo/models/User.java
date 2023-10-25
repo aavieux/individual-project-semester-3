@@ -1,9 +1,7 @@
 package com.example.demo.models;
 import com.example.demo.models.enums.Genre;
 import com.example.demo.models.enums.Role;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,6 +39,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -52,6 +51,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
+    @JsonIgnore
     private List<Library> collection;
 
     //favourites
@@ -72,13 +72,14 @@ public class User implements UserDetails {
     private ShadowProfile f_author;
 
     @OneToMany(mappedBy = "user")//ok
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
     private List<Review> reviews;
 
     @OneToMany(mappedBy = "user")//ok
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
     private List<Transaction> transactions;
-
 
 
     public Long getId() {
@@ -110,6 +111,7 @@ public class User implements UserDetails {
         return phone_number;
     }
 
+    @JsonIgnore
     public List<Library> getCollection() {
         return collection;
     }
@@ -126,10 +128,12 @@ public class User implements UserDetails {
         return f_author;
     }
 
+//    @JsonIgnore
     public List<Review> getReviews() {
         return reviews;
     }
 
+//    @JsonIgnore
     public List<Transaction> getTransactions() {
         return transactions;
     }

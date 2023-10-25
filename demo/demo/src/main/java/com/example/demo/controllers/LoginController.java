@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/api/v1/login")
 class LoginController {
     @GetMapping()
     String login() {
         return "login";
     }
-
+}
 //    @PostMapping()
 //    public String authenticate(@RequestParam String username, @RequestParam String password) {
 //        try {
@@ -34,5 +34,3 @@ class LoginController {
 //    }
 
 
-
-}
