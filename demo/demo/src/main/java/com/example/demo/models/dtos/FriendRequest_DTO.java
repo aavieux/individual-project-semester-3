@@ -4,8 +4,10 @@ import com.example.demo.models.User;
 import com.example.demo.models.enums.Status;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 
 @Builder
+@Data
 public class FriendRequest_DTO {
 
     private Long id;

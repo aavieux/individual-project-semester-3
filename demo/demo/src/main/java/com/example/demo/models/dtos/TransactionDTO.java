@@ -6,10 +6,12 @@ import com.example.demo.models.enums.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.Date;
 
 @Builder
+@Data
 public class TransactionDTO {
 
     private Long id;

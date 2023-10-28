@@ -5,11 +5,14 @@ import com.example.demo.models.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Builder
-public class BookDTO {
+@Data
+public class BookDTO{
 
     private Long id;
 

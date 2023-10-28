@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -35,6 +36,5 @@ public class UserDTO {
     private Long f_book_id;
 
     private Long f_author_id;
-
 
 }

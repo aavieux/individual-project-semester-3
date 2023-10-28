@@ -8,8 +8,6 @@ import com.example.demo.repositories.BookRepository;
 import com.example.demo.repositories.LibraryRepository;
 import com.example.demo.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,7 +63,7 @@ public class BookService {
     public List<Library> getAllLibrariesByUser(User user){
         return libraryRepository.getAllLibrariesByUser(user.getId());
     }
-    public Optional<Library> getLibraryById(Long library_id, User authenticatedUser){
+    public Optional<Library> getLibraryByIdByAuthenticatedUser(Long library_id, User authenticatedUser){
         return libraryRepository.getLibraryById(library_id, authenticatedUser.getId());
     }
     public boolean addLibrary(Library library){

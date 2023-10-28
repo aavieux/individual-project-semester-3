@@ -65,4 +65,10 @@ public class JwtService_TokenService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+    public String extractToken(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7); // Extract the token part after "Bearer "
+        }
+        return null; // Return null if the header is not in the expected format
+    }
 }

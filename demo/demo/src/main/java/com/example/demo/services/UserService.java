@@ -6,6 +6,8 @@ import com.example.demo.models.enums.FriendRequestStatusNoDb;
 import com.example.demo.repositories.FriendRequestRepository;
 import com.example.demo.repositories.FriendshipRepository;
 import com.example.demo.repositories.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -18,16 +20,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
+
 public class UserService {
     private final UserRepository userRepository;
     private final FriendshipRepository friendShipRepository;
     private final FriendRequestRepository friendRequestRepository;
-    @Autowired
-    public UserService(UserRepository userRepository, FriendshipRepository friendShipRepository, FriendRequestRepository friendRequestRepository) {
-        this.userRepository = userRepository;
-        this.friendShipRepository = friendShipRepository;
-        this.friendRequestRepository = friendRequestRepository;
-    }
+
 
 //-----------------------------------------USERS-----------------------------------
     @Cacheable("allUsers")
@@ -46,17 +45,12 @@ public class UserService {
 
     public User getUserByEmail(String user_email){
         Optional<User> optionalUser = userRepository.getUserByEmail(user_email);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
-        else {
-            return null;
-        }
+        return optionalUser.orElse(null);
     }
 
     public User getUserById(Long userId){
         Optional<User> optionalUser = userRepository.getUserById(userId);
-        return optionalUser.eors (null);
+        return optionalUser.orElse(null);
 
     }
 
@@ -68,16 +62,16 @@ public class UserService {
 //        return relationshipRepository.getAllFriendships();
 //    }
     @Cacheable(value = "userFriends", key = "#user.id")
-    public List<Optional<User>> getAllFriendsByUser(User user){
+    public List<User> getAllFriendsByUser(User user){
 
         List<Long> friendListIds = new java.util.ArrayList<>(List.of());
-        List<Optional<User>> friends = new java.util.ArrayList<>(List.of());
+        List<User> friends = new java.util.ArrayList<>(List.of());
 
         friendListIds.addAll(friendShipRepository.friendshipRow1(user.getId()));
         friendListIds.addAll(friendShipRepository.friendshipRow2(user.getId()));
 
         for (Long userId : friendListIds){
-            friends.add(userRepository.getUserById(userId));
+            friends.add(userRepository.getUserById(userId).orElse(null));
         }
         return friends;
     }

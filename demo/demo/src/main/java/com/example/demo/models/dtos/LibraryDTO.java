@@ -4,15 +4,17 @@ import com.example.demo.models.Book;
 import com.example.demo.models.User;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
 @Builder
+@Data
 public class LibraryDTO {
 
     private Long id;
 
-    private User user;
+    private Long user_id;
 
     private String title;
 }

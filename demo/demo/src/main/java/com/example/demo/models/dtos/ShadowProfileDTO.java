@@ -4,10 +4,12 @@ import com.example.demo.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
 @Builder
+@Data
 public class ShadowProfileDTO {
 
     private Long id;
