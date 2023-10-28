@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Book;
 import com.example.demo.models.Library;
+import com.example.demo.models.dtos.BookDTO;
 import com.example.demo.models.dtos.LibraryDTO;
 import com.example.demo.security.jwt.JwtService_TokenService;
 import com.example.demo.services.BookService;
@@ -25,7 +27,7 @@ public class LibraryController {
     public ResponseEntity<Object> userLibraries(@RequestHeader("Authorization") String authorizationHeader, Authentication authentication){
         if (authentication != null && authentication.isAuthenticated()) {
 
-            List<Library> libraries = bookService.getAllLibrariesByUser(userService.getUserByEmail(jwtServiceTokenService.extractToken(authorizationHeader)));
+            List<Library> libraries = bookService.getAllLibrariesByUser(userService.getUserByEmail(jwtServiceTokenService.extractUsername(jwtServiceTokenService.extractToken(authorizationHeader))));
             if (libraries != null) {
                 List<LibraryDTO> libraryDTOList = new java.util.ArrayList<>(List.of());
                 try {
@@ -51,15 +53,48 @@ public class LibraryController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not Authenticated");
 
     }
-    @GetMapping("/profile/mylibrary/{library_id}")
-    public String userLibrariesId(@PathVariable(value = "library_id") Long library_id, Model model, Authentication authentication){
-        Library authenticatedLibrary = bookService.getLibraryByIdByAuthenticatedUser(library_id,getAuthenticatedUser(authentication));
-        if (authenticatedLibrary == null){
+    @GetMapping("/mylibrary/{id}")
+    public ResponseEntity<Object> getBooksByLibraryId(@PathVariable("id") Long id, @RequestHeader("Authorization") String authorizationHeader, Authentication authentication){
+        if (authentication != null && authentication.isAuthenticated()) {
+            try {
+                Library library = bookService.getLibraryByIdByAuthenticatedUser(id, userService.getUserByEmail(jwtServiceTokenService.extractUsername(jwtServiceTokenService.extractToken(authorizationHeader))) ); //TODO check if it is null
+                if (library != null) {
+                    if (!library.getBooks().isEmpty()){
+                        List<BookDTO> bookDTOList = new java.util.ArrayList<>(List.of());
+                        try {
+                            for (Book book : library.getBooks()
+                            ) {
+                                BookDTO bookDTO = BookDTO.builder()
+                                        .id(book.getId())
+                                        .genre(book.getGenre())
+                                        .cover_url(book.getCover_url())
+                                        .author_id(book.getAuthor().getId())
+                                        .author_pseudonym(book.getAuthor().getPseudonym())
+                                        .title(book.getTitle())
+                                        .library_title(library.getTitle())
+                                        .isbn(book.getIsbn())
+                                        .build();
+                                bookDTOList.add(bookDTO);
+                            }
+                            return ResponseEntity.ok(bookDTOList);
+                        }
+                        catch (Exception e ){
+                            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing Books to JSON");
+                        }
+                    }
+                    return ResponseEntity.ok("No books in this library");
 
-            return "redirect:/";
+                }
+                else {
+                    ResponseEntity.ok("Library does not exist");
+                }
+            }
+            catch (Exception e ){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error Extracting User From Token");
+            }
+
         }
-        model.addAttribute("authenticatedLibrary", authenticatedLibrary);
-        return "booksFromLibrary";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not Authenticated");
     }
 
 }

@@ -26,4 +26,10 @@ public class BookDTO{
 
     private String cover_url;
 
+    private String author_pseudonym;
+
+    private String author_profile_pic_url;
+
+    private String library_title;
+
 }

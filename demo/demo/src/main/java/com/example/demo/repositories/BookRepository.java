@@ -12,11 +12,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 //@Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "SELECT * FROM book", nativeQuery = true)
     List<Book> getAllBooks();
+    @Query(value = "SELECT * FROM book b WHERE b.id LIKE :book_id_p", nativeQuery = true)
+    Optional<Book> getBookById(@Param("book_id_p") Long book_id);
 
     @Modifying //it will change the database
     @Transactional //  If an exception occurs, the transaction is rolled back, reverting any changes made within the method, ensuring that the database remains in a consistent state.

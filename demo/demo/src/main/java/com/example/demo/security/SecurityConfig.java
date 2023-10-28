@@ -35,7 +35,7 @@ public class SecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(crf -> crf.disable());
         http.authorizeHttpRequests(rQ -> {
-            rQ.requestMatchers("/api/v1/auth/**").permitAll();
+            rQ.requestMatchers("/api/auth/**").permitAll();
             rQ.anyRequest().authenticated();
 
         });

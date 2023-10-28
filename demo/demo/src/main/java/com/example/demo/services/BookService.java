@@ -30,7 +30,9 @@ public class BookService {
     public List<Book> getAllBooks(){
         return  bookRepository.getAllBooks();
     }
-
+    public Book getBookById(Long book_id){
+        return bookRepository.getBookById(book_id).orElse(null);
+    }
     public List<Book> getAllBooksBySearch(String query){
         List<Book> foundBooks = new java.util.ArrayList<>(List.of());
         for (Book book: bookRepository.getAllBooks()) {
@@ -63,8 +65,11 @@ public class BookService {
     public List<Library> getAllLibrariesByUser(User user){
         return libraryRepository.getAllLibrariesByUser(user.getId());
     }
-    public Optional<Library> getLibraryByIdByAuthenticatedUser(Long library_id, User authenticatedUser){
-        return libraryRepository.getLibraryById(library_id, authenticatedUser.getId());
+    public Library getLibraryByIdByAuthenticatedUser(Long library_id, User authenticatedUser){
+        return libraryRepository.getLibraryByIdByUser(library_id, authenticatedUser.getId()).orElse(null);
+    }
+    public Library getLibraryById(Long library_id){
+        return libraryRepository.getLibraryById(library_id).orElse(null);
     }
     public boolean addLibrary(Library library){
         return libraryRepository.addLibrary(library.getTitle(), library.getUser().getId());

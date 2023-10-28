@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/relationships")
@@ -25,27 +24,36 @@ public class RelationshipController {
     public ResponseEntity<Object> getAllFriendsForUser(@RequestParam("userId") Long userId, @RequestHeader("Authorization") String authorizationHeader, Authentication authentication){
 
         if (authentication != null && authentication.isAuthenticated()) { // if user is authenticated
-            List<UserDTO> friendsList = new java.util.ArrayList<>(List.of());
-            for (User user : userService.getAllUsers()
-                 ) {
-                if (user.getId().equals(userId)){
-                    for (User friend :userService.getAllFriendsByUser(user)
-                         ) {
-                        UserDTO friendDTO = UserDTO.builder()
-                                .id(friend.getId())
+            List<User> friendsOfUser = userService.getAllFriendsByUser(userService.getUserByEmail(jwtServiceTokenService.extractUsername(jwtServiceTokenService.extractToken(authorizationHeader))));
+            if (!friendsOfUser.isEmpty())
+            {
+                List<UserDTO> friendsListDTO = new java.util.ArrayList<>(List.of());
+                try {
+                    for (User friend : friendsOfUser
+                    ) {
+                        UserDTO friendDTO = UserDTO.builder().id(friend.getId())
+                                .email(friend.getEmail())
+                                .f_genre(friend.getF_genre())
                                 .first_name(friend.getFirst_name())
                                 .last_name(friend.getLast_name())
-                                .f_genre(friend.getF_genre())
+                                .phone_number(friend.getPhone_number())
+                                .profile_pic_url(friend.getProfile_pic_url())
+                                .role(friend.getRole())
                                 .f_author_id(friend.getF_author().getId())
                                 .f_book_id(friend.getF_book().getId())
-                                .profile_pic_url(friend.getProfile_pic_url())
                                 .build();
-                        friendsList.add(friendDTO);
+                        friendsListDTO.add(friendDTO);
                     }
-                    return ResponseEntity.ok(friendsList);
+                    return ResponseEntity.ok(friendsListDTO);
+                }
+                catch (Exception e){
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON");
                 }
 
+
             }
+            return ResponseEntity.ok("User has no friends");
+
 
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User Not Authenticated");

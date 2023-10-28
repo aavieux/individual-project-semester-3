@@ -13,8 +13,8 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/auth/**") // Allow CORS for specific path
-                        .allowedOrigins("http://localhost:4000") // Allow requests from this origin
+                registry.addMapping("/api/auth/**") // Allow CORS for specific path
+                        .allowedOrigins("http://localhost:3000") // Allow requests from this origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true)
                         .maxAge(3600);
