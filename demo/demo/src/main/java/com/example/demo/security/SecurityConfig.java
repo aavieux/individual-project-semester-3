@@ -42,7 +42,9 @@ public class SecurityConfig {
 
         http.sessionManagement(sessionAuthenticationStrategy ->
                 sessionAuthenticationStrategy.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         http.authenticationProvider(authProvider);
+        
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
 //        http.formLogin(form -> form

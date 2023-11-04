@@ -1,14 +1,11 @@
 package com.example.demo.controllers;
 import com.example.demo.models.Book;
-import com.example.demo.models.Library;
 import com.example.demo.models.dtos.BookDTO;
-import com.example.demo.models.dtos.LibraryDTO;
 import com.example.demo.security.jwt.JwtService_TokenService;
 import com.example.demo.services.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,40 +17,33 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-    private final JwtService_TokenService jwtServiceTokenService;
 
     @GetMapping()
-    public ResponseEntity<List<BookDTO>> allBooks(@RequestHeader("Authorization") String authorizationHeader, Authentication authentication){
-        List<BookDTO> listBookDTO = new java.util.ArrayList<>(List.of());
+    public ResponseEntity<List<BookDTO>> allBooks(){
 //        System.out.println("ZLIZA -----------------------------------------------------------------------------------");
-        if (authentication != null && authentication.isAuthenticated()) {
-            for (Book book :bookService.getAllBooks()
-                 ) {
-                BookDTO bookDTO = BookDTO.builder()
-                        .id(book.getId())
-                        .title(book.getTitle())
-                        .genre(book.getGenre())
-                        .genre(book.getGenre())
-                        .author_id(book.getAuthor().getId())
-                        .cover_url(book.getCover_url())
-                        .build();
 
-               listBookDTO.add(bookDTO);
-            }
-            return ResponseEntity.ok(listBookDTO);
+        List<BookDTO> listBookDTO = new java.util.ArrayList<>(List.of());
+        for (Book book :bookService.getAllBooks()
+             ) {
+            BookDTO bookDTO = BookDTO.builder()
+                    .id(book.getId())
+                    .title(book.getTitle())
+                    .genre(book.getGenre())
+                    .genre(book.getGenre())
+                    .author_id(book.getAuthor().getId())
+                    .cover_url(book.getCover_url())
+                    .build();
+
+           listBookDTO.add(bookDTO);
         }
-        else{
-            return null;
-        }
+        return ResponseEntity.ok(listBookDTO);
     }
 //    @GetMapping("/search")
 //    public List<Book> searchBooks(@RequestParam("query") String query) {
 //        return bookService.getAllBooksBySearch(query);
 //    }
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getBookDetails(@PathVariable("id") Long book_id, @RequestHeader("Authorization") String authorizationHeader, Authentication authentication){
-        if (authentication != null && authentication.isAuthenticated()) {
-
+    public ResponseEntity<Object> getBookDetails(@PathVariable("id") Long book_id){
            Book book = bookService.getBookById(book_id);
             if (book != null) {
                 try {
@@ -75,7 +65,6 @@ public class BookController {
             else {
                 ResponseEntity.ok("No such book");
             }
-        }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not Authenticated");
 
     }

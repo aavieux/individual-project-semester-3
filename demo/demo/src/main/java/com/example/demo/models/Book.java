@@ -4,11 +4,7 @@ import com.example.demo.models.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.Shadow;
-import org.hibernate.annotations.Type;
-import org.hibernate.type.descriptor.jdbc.NVarcharJdbcType;
 
 import java.util.List;
 

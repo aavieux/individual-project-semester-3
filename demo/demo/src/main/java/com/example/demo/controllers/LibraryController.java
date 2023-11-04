@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
-
 import com.example.demo.models.Book;
 import com.example.demo.models.Library;
+import com.example.demo.models.User;
 import com.example.demo.models.dtos.BookDTO;
 import com.example.demo.models.dtos.LibraryDTO;
 import com.example.demo.security.jwt.JwtService_TokenService;
@@ -11,8 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -22,12 +22,10 @@ public class LibraryController {
 
     private final BookService bookService;
     private final UserService userService;
-    private final JwtService_TokenService jwtServiceTokenService;
     @GetMapping("/mylibrary")
-    public ResponseEntity<Object> userLibraries(@RequestHeader("Authorization") String authorizationHeader, Authentication authentication){
-        if (authentication != null && authentication.isAuthenticated()) {
-
-            List<Library> libraries = bookService.getAllLibrariesByUser(userService.getUserByEmail(jwtServiceTokenService.extractUsername(jwtServiceTokenService.extractToken(authorizationHeader))));
+    public ResponseEntity<Object> userLibraries(Authentication authentication){
+        User authenticatedUser = userService.getUserByEmail(((UserDetails) authentication.getPrincipal()).getUsername());
+        List<Library> libraries = bookService.getAllLibrariesByUser(authenticatedUser);
             if (libraries != null) {
                 List<LibraryDTO> libraryDTOList = new java.util.ArrayList<>(List.of());
                 try {
@@ -49,15 +47,14 @@ public class LibraryController {
             else {
                 ResponseEntity.ok("User has no libraries");
             }
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not Authenticated");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("There was a problem with the authorisation");
 
     }
     @GetMapping("/mylibrary/{id}")
-    public ResponseEntity<Object> getBooksByLibraryId(@PathVariable("id") Long id, @RequestHeader("Authorization") String authorizationHeader, Authentication authentication){
-        if (authentication != null && authentication.isAuthenticated()) {
+    public ResponseEntity<Object> getBooksByLibraryId(@PathVariable("id") Long id, Authentication authentication){
+        User authenticatedUser = userService.getUserByEmail(((UserDetails) authentication.getPrincipal()).getUsername());
             try {
-                Library library = bookService.getLibraryByIdByAuthenticatedUser(id, userService.getUserByEmail(jwtServiceTokenService.extractUsername(jwtServiceTokenService.extractToken(authorizationHeader))) ); //TODO check if it is null
+                Library library = bookService.getLibraryByIdByAuthenticatedUser(id, authenticatedUser); //TODO check if it is null
                 if (library != null) {
                     if (!library.getBooks().isEmpty()){
                         List<BookDTO> bookDTOList = new java.util.ArrayList<>(List.of());
@@ -78,6 +75,7 @@ public class LibraryController {
                             }
                             return ResponseEntity.ok(bookDTOList);
                         }
+
                         catch (Exception e ){
                             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing Books to JSON");
                         }
@@ -92,9 +90,8 @@ public class LibraryController {
             catch (Exception e ){
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error Extracting User From Token");
             }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("There was a problem with the authorisation");
 
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not Authenticated");
     }
 
 }

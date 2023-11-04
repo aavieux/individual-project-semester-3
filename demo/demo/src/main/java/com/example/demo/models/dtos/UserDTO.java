@@ -37,4 +37,8 @@ public class UserDTO {
 
     private Long f_author_id;
 
+    private String f_author_pseudonym;
+
+    private Integer total_friends;
+
 }

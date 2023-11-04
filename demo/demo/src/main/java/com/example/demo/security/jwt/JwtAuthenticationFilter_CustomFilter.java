@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +35,7 @@ public class JwtAuthenticationFilter_CustomFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
-        username = tokenService.extractUsername(jwt);// todo extract the user email from jwt token;
+        username = tokenService.extractUsername(jwt);//
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if(tokenService.isTokenValid(jwt, userDetails)){

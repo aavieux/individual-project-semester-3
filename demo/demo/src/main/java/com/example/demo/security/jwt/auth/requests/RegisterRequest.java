@@ -1,16 +1,8 @@
 package com.example.demo.security.jwt.auth.requests;
-
-import com.example.demo.models.Book;
-import com.example.demo.models.Library;
-import com.example.demo.models.ShadowProfile;
-import com.example.demo.models.enums.Genre;
 import com.example.demo.models.enums.Role;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
