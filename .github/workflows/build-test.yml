@@ -1,0 +1,31 @@
+name: Build and Test Spring Boot App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Build and test Spring Boot app
+      run: |
+        chmod +x mvnw
+        ./mvnw clean install
+      working-directory: ./src/main/java/com/example/demo/IndividualProject3MavenApplication.java  # Set the correct path to your Spring Boot application
+
+    - name: Run tests
+      run: |
+        chmod +x mvnw
+        ./mvnw test
+      working-directory: ./src/main/java/com/example/demo/IndividualProject3MavenApplication.java  # Set the correct path to your Spring Boot application
