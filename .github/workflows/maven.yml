@@ -29,11 +29,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
         
-    - name: Build with Maven and Replace Properties
+    - name: Build with Maven and Use application-test.properties
       run: |
-        mv application-test.properties demo/demo/src/main/resources/application.properties
-        mvn -B package --file demo/demo/pom.xml
-        mvn test
+        mvn -B package --file demo/demo/pom.xml -Dspring.config.name=application-test
       env:
         DB_URL: ${{ secrets.DB_URL }}
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
