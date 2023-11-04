@@ -21,17 +21,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+        
+    - name: Build with Maven and Use application-test.properties
       run: |
-        mvn -B package --file demo/demo/pom.xml
-        mvn test -Dspring.config.name=application-test.properties
-      
+        mvn -B package --file demo/demo/pom.xml -Dspring.config.name=application-test
+      env:
+        DB_URL: ${{ secrets.DB_URL }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
