@@ -43,13 +43,13 @@ public class RelationshipController {
                             .build();
                     friendsListDTO.add(friendDTO);
                 }
-                return ResponseEntity.ok(friendsListDTO);
+                return ResponseEntity.ok(friendsListDTO); //200
             }
             catch (Exception e){
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON"); //409
             }
         }
-        return ResponseEntity.ok("User has no friends");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User has no friends"); // 404
 
     }
 

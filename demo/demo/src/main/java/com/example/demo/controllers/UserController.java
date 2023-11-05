@@ -34,9 +34,9 @@ public class UserController {
                     .email(user.getEmail())
                     .total_friends(userService.getAllFriendsByUser(user).size())
                     .build();
-            return ResponseEntity.ok(userDTO);
+            return ResponseEntity.ok(userDTO); // 200
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!"); // 404
     }
     @GetMapping("/profile")
     public ResponseEntity<Object> getUserDetails(Authentication authentication) {
@@ -56,15 +56,15 @@ public class UserController {
                         .f_book_id(user.getF_book().getId())
                         .total_friends(userService.getAllFriendsByUser(user).size())
                         .build();
-                return ResponseEntity.ok(userDTO);
+                return ResponseEntity.ok(userDTO); //200
 
             }
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("No User found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User found"); //404
         }
         catch (Exception e)
         {
             // Handle JSON serialization error
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON"); // 409
         }
 
     }

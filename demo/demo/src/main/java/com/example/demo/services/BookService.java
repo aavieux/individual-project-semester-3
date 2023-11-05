@@ -74,4 +74,15 @@ public class BookService {
     public boolean addLibrary(Library library){
         return libraryRepository.addLibrary(library.getTitle(), library.getUser().getId());
     }
+    public void saveLibraryToDB(Library library){
+        libraryRepository.save(library);
+    }
+    public boolean addBookToLibrary(Book book, Library library){
+        if (!library.getBooks().contains(book)){
+            library.getBooks().add(book);
+            saveLibraryToDB(library);
+            return true;
+        }
+        return false;
+    }
 }

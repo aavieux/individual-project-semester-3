@@ -17,4 +17,6 @@ public class LibraryDTO {
     private Long user_id;
 
     private String title;
+
+    private List<Long> book_ids;
 }

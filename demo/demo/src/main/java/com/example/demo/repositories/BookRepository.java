@@ -26,6 +26,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "INSERT INTO book (cover_url, genre, isbn, title, shadowprofile_id) VALUES (:cover_url_p, :genre_p, :isbn_p, :title_p, :shadowprofile_id_p)", nativeQuery = true)
     boolean addBook(@Param("cover_url_p") String cover_url, @Param("genre_p")Genre genre, @Param("isbn_p") String isbn, @Param("title_p") String title, @Param("shadowprofile_id_p") Long shadowprofile_id);
 
+
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM book b WHERE b.id LIKE :book_id_p", nativeQuery = true)

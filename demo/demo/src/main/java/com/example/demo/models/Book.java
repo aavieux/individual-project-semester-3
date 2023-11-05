@@ -84,6 +84,9 @@ public class Book {
         return transactions;
     }
 
+    public List<Library> getLibraries() {
+        return libraries;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -119,5 +122,9 @@ public class Book {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public void setLibraries(List<Library> libraries) {
+        this.libraries = libraries;
     }
 }

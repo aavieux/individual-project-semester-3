@@ -31,23 +31,29 @@ public class LibraryController {
                 try {
                     for (Library library : libraries
                     ) {
+                        List<Long> book_ids = new java.util.ArrayList<>(List.of());
+                        for (Book book :
+                                library.getBooks()) {
+                            book_ids.add(book.getId());
+                        }
                         LibraryDTO libraryDTO = LibraryDTO.builder()
                                 .id(library.getId())
                                 .user_id(library.getUser().getId())
                                 .title(library.getTitle())
+                                .book_ids(book_ids)
                                 .build();
                         libraryDTOList.add(libraryDTO);
                     }
-                    return ResponseEntity.ok(libraryDTOList);
+                    return ResponseEntity.ok(libraryDTOList); //200
                 }
                 catch (Exception e ){
-                    return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON");
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON"); //409
                 }
             }
             else {
-                ResponseEntity.ok("User has no libraries");
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("User has no libraries"); // 404
             }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("There was a problem with the authorisation");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("There was a problem with the authorisation"); // 401
 
     }
     @GetMapping("/mylibrary/{id}")
@@ -73,24 +79,24 @@ public class LibraryController {
                                         .build();
                                 bookDTOList.add(bookDTO);
                             }
-                            return ResponseEntity.ok(bookDTOList);
+                            return ResponseEntity.ok(bookDTOList); // 200
                         }
 
                         catch (Exception e ){
-                            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing Books to JSON");
+                            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing Books to JSON"); //409
                         }
                     }
-                    return ResponseEntity.ok("No books in this library");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No books in this library"); //  404
 
                 }
                 else {
-                    ResponseEntity.ok("Library does not exist");
+                    System.out.println("in the else");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Library does not exist"); // 404
                 }
             }
             catch (Exception e ){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error Extracting User From Token");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error Extracting User From Token"); // 401
             }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("There was a problem with the authorisation");
 
     }
 
