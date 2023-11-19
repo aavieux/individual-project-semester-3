@@ -10,6 +10,7 @@ import com.example.demo.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,5 +85,30 @@ public class BookService {
             return true;
         }
         return false;
+    }
+    public boolean deleteBookFromLibrary(Book book, Library library){
+        if (library.getBooks().contains(book)){
+            library.getBooks().remove(book);
+            saveLibraryToDB(library);
+            return true;
+        }
+        return false;
+    }
+    public List<Book> searchByQuery(String query){
+        if (!query.isEmpty()){
+            List<Book> foundBooks = new ArrayList<>();
+            for (Book book :
+                    bookRepository.getAllBooks()) {
+                if (book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                        book.getAuthor().getPseudonym().toLowerCase().contains(query.toLowerCase()) ||
+                        book.getIsbn().contains(query)
+                ){
+                    foundBooks.add(book);
+                }
+
+            }
+            return foundBooks;
+        }
+        return null;
     }
 }
