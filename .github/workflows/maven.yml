@@ -27,10 +27,12 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Login to Docker Hub
-      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+      run: |
+        cd demo
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+
 
     - name: Docker Build and Push to DockerHub
-
       run: |
         cd demo
         docker build -t aavieux/individual-project-semester-3:latest .
