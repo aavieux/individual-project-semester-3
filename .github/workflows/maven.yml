@@ -33,7 +33,7 @@ jobs:
 
       run: |
         cd demo
-        docker build -t aavieux/individual-project-semester-3:latest Dockerfile.
+        docker build -t aavieux/individual-project-semester-3:latest .
         docker push aavieux/individual-project-semester-3:latest
  
           
