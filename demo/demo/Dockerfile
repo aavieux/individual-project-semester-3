@@ -1,11 +1,11 @@
 # Start with a base image that includes Java
-FROM adoptopenjdk:17-jdk-hotspot
+FROM eclipse-temurin:17-jdk-jammy
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the compiled JAR file from the target directory to the container
-COPY demo/demo/target/demo-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY target/demo-0.0.1-SNAPSHOT.jar /app/app.jar
 
 # Expose the port your app runs on
 EXPOSE 8080
