@@ -31,7 +31,7 @@ jobs:
         
     - name: Build with Maven and Use application-test.properties
       run: |
-        mvn -B package --file .\pom.xml -Dspring.config.name=application-test
+        mvn -B package --file demo/demo/pom.xml -Dspring.config.name=application-test
       env:
         DB_URL: ${{ secrets.DB_URL }}
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
