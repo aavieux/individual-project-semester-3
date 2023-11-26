@@ -26,6 +26,11 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file demo/demo/pom.xml -Dspring.config.name=application-test
 
+    - name: Run generated tests
+      run: |
+        cd demo\demo\src\test\java\com\example\demo\controllers
+        ./mvnw test
+          
     - name: Login to Docker Hub
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
