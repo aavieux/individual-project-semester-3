@@ -31,15 +31,12 @@ jobs:
 
     - name: Login to Docker Hub
       run: |
-        cd demo
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
 
 
     - name: Docker Build and Push to DockerHub
       run: |
-        
-        cd demo
-        docker build -t aavieux/individual-project-semester-3:latest .
+        docker build -t aavieux/individual-project-semester-3:latest -f demo/Dockerfile.
         docker push aavieux/individual-project-semester-3:latest
  
           
