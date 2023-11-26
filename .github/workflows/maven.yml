@@ -28,7 +28,7 @@ jobs:
 
     - name: Run generated tests
       run: |
-        cd demo\demo\src\test\java\com\example\demo\controllers
+        cd demo/demo/src/test/java/com/example/demo/controllers
         ./mvnw test
           
     - name: Login to Docker Hub
