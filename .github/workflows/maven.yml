@@ -29,7 +29,7 @@ jobs:
     - name: Run generated tests
       run: |
         cd demo/demo
-        mvn clean test -Dspring.config.name=application-test
+        mvn test -Dspring.config.name=application-test
           
     - name: Login to Docker Hub
       run: |
