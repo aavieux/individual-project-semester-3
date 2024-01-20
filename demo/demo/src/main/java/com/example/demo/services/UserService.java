@@ -1,5 +1,4 @@
 package com.example.demo.services;
-
 import com.example.demo.models.FriendRequest;
 import com.example.demo.models.User;
 import com.example.demo.models.enums.FriendRequestStatusNoDb;
@@ -7,38 +6,37 @@ import com.example.demo.repositories.FriendRequestRepository;
 import com.example.demo.repositories.FriendshipRepository;
 import com.example.demo.repositories.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-
 public class UserService {
     private final UserRepository userRepository;
     private final FriendshipRepository friendShipRepository;
     private final FriendRequestRepository friendRequestRepository;
 
-
 //-----------------------------------------USERS-----------------------------------
-    @Cacheable("allUsers")
+//    @Cacheable("allUsers")
     public List<User> getAllUsers(){
         return userRepository.getAllUsers();
     }
 
-    @CacheEvict(value = "allUsers", allEntries = true)
+//    @CacheEvict(value = "allUsers", allEntries = true)
     public boolean addUser(User user){
         return userRepository.addUser(user.getRole().toString(),user.getFirst_name(), user.getLast_name(), user.getEmail(), user.getPassword(), user.getPhone_number(), user.getF_genre().toString(), user.getF_author().getId(), user.getF_book().getId());
     }
-    @CacheEvict(value = "allUsers", allEntries = true)
+    public boolean saveUserToDB(User user){
+        try {
+            userRepository.save(user);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+//    @CacheEvict(value = "allUsers", allEntries = true)
     public boolean deleteUser(User user){
         return userRepository.deleteUserById(user.getId());
     }
@@ -51,7 +49,6 @@ public class UserService {
     public User getUserById(Long userId){
         Optional<User> optionalUser = userRepository.getUserById(userId);
         return optionalUser.orElse(null);
-
     }
 
 
@@ -61,7 +58,7 @@ public class UserService {
 //    public List<Friendship> getAllFriendships(){
 //        return relationshipRepository.getAllFriendships();
 //    }
-    @Cacheable(value = "userFriends", key = "#user.id")
+//    @Cacheable(value = "userFriends", key = "#user.id")
     public List<User> getAllFriendsByUser(User user){
 
         List<Long> friendListIds = new java.util.ArrayList<>(List.of());
@@ -75,7 +72,7 @@ public class UserService {
         }
         return friends;
     }
-    @CacheEvict(value = {"userFriends"}, allEntries = true)
+//    @CacheEvict(value = {"userFriends"}, allEntries = true)
     public boolean addFriendship(User user1, User user2){
         return friendShipRepository.addFriendship(user1.getId(), user2.getId());
     }
@@ -98,15 +95,12 @@ public class UserService {
     }
     //    --------------------------FRIEND REQUESTS------------------------
 
-    @Cacheable(value = "userIncomingFriendRequests", key = "#user.id")
+//    @Cacheable(value = "userIncomingFriendRequests", key = "#user.id")
     public List<FriendRequest> getIncomingFriendRequestsByUser(User user){
         return friendRequestRepository.getIncomingFriendRequestsByUser(user.getId());
     }
-    @Cacheable(value = "userOutcomingFriendRequests", key = "#user.id")
+//    @Cacheable(value = "userOutcomingFriendRequests", key = "#user.id")
     public List<FriendRequest> getOutcomingFriendRequestsByUser(User user){
         return friendRequestRepository.getOutcomingFriendRequestsByUsers(user.getId());
     }
-
-
-
 }

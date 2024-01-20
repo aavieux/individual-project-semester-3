@@ -31,6 +31,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Transactional
+    @Query(value = "UPDATE users u SET first_name = :userFirstName_p WHERE u.id = :userId_p", nativeQuery = true)
+    boolean updateUser(@Param("userId_p") Long userId, @Param("userFirstName_p") String userFirstName);
+    @Modifying
+    @Transactional
     @Query(value = "DELETE FROM user u WHERE u.id = :userId_p", nativeQuery = true)
     boolean deleteUserById(@Param("userId_p") Long userId);
 

@@ -27,6 +27,4 @@ public class RegisterRequest {
 
 
     private String profile_pic_url; //nullable
-
-
 }

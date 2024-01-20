@@ -1,5 +1,4 @@
 package com.example.demo.services;
-
 import com.example.demo.models.Book;
 import com.example.demo.models.Library;
 import com.example.demo.models.Transaction;
@@ -9,10 +8,8 @@ import com.example.demo.repositories.LibraryRepository;
 import com.example.demo.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {

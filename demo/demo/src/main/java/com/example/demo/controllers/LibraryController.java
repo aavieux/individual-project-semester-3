@@ -89,7 +89,6 @@ public class LibraryController {
 
                 }
                 else {
-                    System.out.println("in the else");
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Library does not exist"); // 404
                 }
             }

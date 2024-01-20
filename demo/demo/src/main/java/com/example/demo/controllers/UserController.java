@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
@@ -68,9 +70,56 @@ public class UserController {
         }
 
     }
+    @PutMapping("/profile/settings")
+    public ResponseEntity<Object> updateUserSettings(Authentication authentication, @RequestBody UserDTO updatedUser) {
+        User user = userService.getUserByEmail(((UserDetails) authentication.getPrincipal()).getUsername());
+        try
+        {
+            if (user != null){
+                if (!Objects.equals(updatedUser.getId(), user.getId()))
+                {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Updating wrong user"); //404
+                }
+                return ResponseEntity.ok("User Updated Successfully"); //200
 
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User found"); //404
+        }
+        catch (Exception e)
+        {
+            // Handle JSON serialization error
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON"); // 409
+        }
 
+    }
+@GetMapping("/test")
+public ResponseEntity<Object> test(Authentication authentication) {
+    User user = userService.getUserByEmail(((UserDetails) authentication.getPrincipal()).getUsername());
+    try
+    {
+        if (user != null){
+            UserDTO userDTO = UserDTO.builder().id(user.getId())
+                    .email(user.getEmail())
+                    .first_name(user.getFirst_name())
+                    .last_name(user.getLast_name())
+                    .phone_number(user.getPhone_number())
+                    .profile_pic_url(user.getProfile_pic_url())
+                    .f_author_id(user.getF_author().getId())
+                    .f_author_pseudonym(user.getF_author().getPseudonym())
+                    .f_book_id(user.getF_book().getId())
+                    .build();
+            return ResponseEntity.ok(userDTO); //200
 
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User found"); //404
+    }
+    catch (Exception e)
+    {
+        // Handle JSON serialization error
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Error serializing User to JSON, Exception: " + e); // 409
+    }
+
+}
 ////    @GetMapping("/allusers") // MyProfile/allUsers
 ////    public String getAllUsers(){
 ////        return "index";
@@ -79,6 +128,4 @@ public class UserController {
 //    public void addUser(){
 //        //....
 //    }
-
-
 }

@@ -1,5 +1,4 @@
 package com.example.demo.security.jwt;
-
 import com.example.demo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

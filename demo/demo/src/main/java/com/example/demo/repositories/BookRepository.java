@@ -1,8 +1,5 @@
 package com.example.demo.repositories;
 import com.example.demo.models.Book;
-import com.example.demo.models.Library;
-import com.example.demo.models.Transaction;
-import com.example.demo.models.User;
 import com.example.demo.models.enums.Genre;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
